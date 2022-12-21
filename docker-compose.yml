@@ -1,0 +1,14 @@
+services:
+  db:
+    image: postgres
+    container_name: ehrust-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+      TZ: "Europe/Ljubljana"
+      PGTZ: "Europe/Ljubljana"
+    ports:
+      - ${POSTGRES_PORT}:5432
+  
