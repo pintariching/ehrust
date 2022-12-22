@@ -13,7 +13,7 @@ create table composition (
 	attestation_ref uuid references attestation_ref("ref") on delete cascade,
 	feeder_audit jsonb,
 	links jsonb,
-    "namespace" uuid not null,
+    "namespace" uuid not null
 );
 
 create index composition_composer_idx on composition using btree (composer, namespace);

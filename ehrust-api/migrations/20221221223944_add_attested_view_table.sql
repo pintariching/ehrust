@@ -13,4 +13,4 @@ create table attested_view (
     "namespace" uuid not null
 );
 
-create index attested_view_attestation_idx on ehr.attested_view using btree (attestation_id, namespace);
+create index attested_view_attestation_idx on attested_view using btree (attestation_id, namespace);
