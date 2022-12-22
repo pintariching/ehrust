@@ -1,5 +1,5 @@
 create table attestation (
-    id uuid primary key default uuid_generate_v4(),
+    id uuid primary key not null default uuid_generate_v4(),
     proof text,
     reason text,
     is_pending boolean,
@@ -9,4 +9,4 @@ create table attestation (
 
 );
 
-create index attestation_reference_idx on attestation using btree (reference, namespace);
+create index attestation_reference_idx on attestation using btree (reference, "namespace");

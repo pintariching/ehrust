@@ -47,3 +47,10 @@ create type contribution_change_type as enum (
     'unknown',
     'deleted'
 );
+
+create type "entry_type" as enum (
+    'section',
+    'care_entry',
+    'admin',
+    'proxy'
+);

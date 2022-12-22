@@ -1,5 +1,5 @@
 create table language (
-    code varchar(5) unique primary key,
+    code varchar(5) unique primary key not null,
     "description" text not null
 );
 

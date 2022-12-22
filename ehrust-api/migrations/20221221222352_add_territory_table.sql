@@ -1,5 +1,5 @@
 create table territory (
-    code int4 unique primary key,
+    code int4 unique primary key not null,
     twoletter bpchar(2),
     threeletter bpchar(3),
     "text" text not null

@@ -1,5 +1,5 @@
 create table party_identified (
-    id uuid primary key default uuid_generate_v4(),
+    id uuid primary key not null default uuid_generate_v4(),
     "name" text,
     -- optional party ref attributes
     party_ref_value text,
@@ -12,7 +12,7 @@ create table party_identified (
     "namespace" uuid not null
 );
 
---create index ehr_subject_id_index on party_identified using btree (jsonb_extract_path_text((js_party_ref(party_ref_value, party_ref_scheme, party_ref_namespace, party_ref_type))::jsonb, variadic array['id'::text, 'value'::text]), namespace);
-create index party_identified_namespace_value_idx on party_identified using btree (party_ref_namespace, party_ref_value, namespace);
-create index party_identified_party_ref_idx on party_identified using btree (party_ref_namespace, party_ref_scheme, party_ref_value, namespace);
-create index party_identified_party_type_idx on party_identified using btree (party_type, name, namespace);
+create index ehr_subject_id_index on party_identified using btree (jsonb_extract_path_text((js_party_ref(party_ref_value, party_ref_scheme, party_ref_namespace, party_ref_type))::jsonb, variadic array['id'::text, 'value'::text]), namespace);
+create index party_identified_namespace_value_idx on party_identified using btree (party_ref_namespace, party_ref_value, "namespace");
+create index party_identified_party_ref_idx on party_identified using btree (party_ref_namespace, party_ref_scheme, party_ref_value, "namespace");
+create index party_identified_party_type_idx on party_identified using btree (party_type, "name", "namespace");

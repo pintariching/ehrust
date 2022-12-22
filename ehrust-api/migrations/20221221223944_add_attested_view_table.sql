@@ -1,5 +1,5 @@
 create table attested_view (
-    id uuid primary key default uuid_generate_v4(),
+    id uuid primary key not null default uuid_generate_v4(),
     attestation_id uuid references attestation(id) on delete cascade,
     --  DvMultimedia
     alternate_text text,

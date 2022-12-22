@@ -1,6 +1,6 @@
 -- defines the modality for accessing an com.ethercisrcis.ehr
 create table access (
-    id uuid primary key default uuid_generate_v4(),
+    id uuid primary key not null default uuid_generate_v4(),
     settings text,
     scheme text, -- name of access control scheme
     "namespace" uuid not null

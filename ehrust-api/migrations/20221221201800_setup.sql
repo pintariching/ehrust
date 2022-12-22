@@ -43,7 +43,7 @@ create collation case_insensitive (provider = icu, locale = 'und-u-ks-level2', d
 
 
 -- ensure INTERVAL is ISO8601 encoded
-alter database public set intervalstyle = 'iso_8601';
+alter database ehrust set intervalstyle = 'iso_8601';
 
 -- load the temporal_tables PLPG/SQL functions to emulate the coded extension
 -- original source: https://github.com/nearform/temporal_tables/blob/master/versioning_function.sql
@@ -235,3 +235,48 @@ END IF;
 RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION tr_function_delete_folder_item()
+    RETURNS trigger
+    LANGUAGE plpgsql
+AS $function$BEGIN
+DELETE FROM object_ref
+WHERE object_ref.id=OLD.object_ref_id AND
+    object_ref.in_contribution= OLD.in_contribution;
+    RETURN OLD;
+END;
+$function$
+;
+
+COMMENT ON FUNCTION tr_function_delete_folder_item() IS 'fires after deletion of folder_items when the corresponding Object_ref  needs to be deleted.';
+
+CREATE OR REPLACE FUNCTION js_party_ref(text, text, text, text)
+    RETURNS json
+    LANGUAGE plpgsql
+    IMMUTABLE
+AS $function$
+DECLARE
+    id_value ALIAS FOR $1;
+    id_scheme ALIAS FOR $2;
+    namespace ALIAS FOR $3;
+    party_type ALIAS FOR $4;
+BEGIN
+    IF (id_value IS NULL AND id_scheme IS NULL AND namespace IS NULL AND party_type IS NULL) THEN
+        RETURN NULL;
+    ELSE
+        RETURN
+            json_build_object(
+                '_type', 'PARTY_REF',
+                'id',
+                json_build_object(
+                        '_type', 'GENERIC_ID',
+                        'value', id_value,
+                        'scheme', id_scheme
+                    ),
+                'namespace', namespace,
+                'type', party_type
+            );
+    END IF;
+END
+$function$
+;

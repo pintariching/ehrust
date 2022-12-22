@@ -1,5 +1,5 @@
 create table audit_details (
-    id uuid primary key default uuid_generate_v4(),
+    id uuid primary key not null default uuid_generate_v4(),
     system_id uuid not null references "system"(id),
     committer uuid not null references party_identified(id),
     time_committed timestamp default now(),

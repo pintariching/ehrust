@@ -8,7 +8,7 @@ create table identifier (
     "namespace" uuid not null
 );
 
-create index ehr_identifier_party_idx on identifier using btree (party, namespace);
-create index identifier_value_idx on identifier using btree (id_value, namespace);
+create index ehr_identifier_party_idx on identifier using btree (party, "namespace");
+create index identifier_value_idx on identifier using btree (id_value, "namespace");
 comment on table identifier is 'specifies an identifier for a party identified, more than one identifier is possible';
 

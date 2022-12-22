@@ -1,5 +1,5 @@
 create table "system" (
-    id uuid primary key default uuid_generate_v4(),
+    id uuid primary key not null default uuid_generate_v4(),
     "description" text not null,
     settings text not null
 );
