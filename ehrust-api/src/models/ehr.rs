@@ -29,6 +29,20 @@ impl Ehr {
         .await
         .map_err(|e| ApiError::sqlx(e))
     }
+
+    pub async fn get_by_id(pool: &PgPool, id: Uuid) -> Result<Ehr, ApiError> {
+        sqlx::query_as!(
+            Ehr,
+            r#"
+                SELECT * FROM ehr
+                WHERE id = $1
+            "#,
+            id
+        )
+        .fetch_one(pool)
+        .await
+        .map_err(|e| ApiError::sqlx(e))
+    }
 }
 
 #[derive(Serialize)]
