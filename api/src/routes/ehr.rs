@@ -2,6 +2,7 @@ use axum::routing::get;
 use axum::{extract::State, http::StatusCode, response::IntoResponse, routing::post, Json, Router};
 use uuid::Uuid;
 
+use crate::extractors::ExtractPrefer;
 use crate::models::ehr::{Ehr, EhrResponse};
 use crate::setup::AppState;
 
@@ -11,7 +12,12 @@ pub fn get_routes() -> Router<AppState> {
         .route("/ehr/{id}", get(get_by_id))
 }
 
-async fn insert(State(state): State<AppState>) -> impl IntoResponse {
+async fn insert(
+    ExtractPrefer(return_value): ExtractPrefer,
+    State(state): State<AppState>,
+) -> impl IntoResponse {
+    dbg!(return_value);
+
     Ehr::create(&state.pool, &state)
         .await
         .map(|ehr| (StatusCode::CREATED, Json(EhrResponse::from_ehr(ehr))))

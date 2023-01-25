@@ -23,7 +23,7 @@ impl System {
         )
         .fetch_one(pool)
         .await
-        .map_err(|e| ApiError::sqlx(e))
+        .map_err(ApiError::sqlx)
     }
 
     pub async fn get_one(pool: &PgPool) -> Option<System> {

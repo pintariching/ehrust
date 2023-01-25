@@ -1,5 +1,4 @@
 use clap::Parser;
-use ehrust_api::Config;
 use sqlx::postgres::PgPoolOptions;
 use tracing::{debug, error};
 use tracing_subscriber::fmt::layer;
@@ -7,7 +6,8 @@ use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
 use tracing_subscriber::EnvFilter;
 
-use ehrust_api::serve;
+use api::serve;
+use api::Config;
 
 #[tokio::main]
 async fn main() {

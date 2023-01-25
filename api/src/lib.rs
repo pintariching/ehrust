@@ -5,6 +5,7 @@ use tracing::{debug, error};
 
 mod config;
 mod errors;
+mod extractors;
 pub mod models;
 mod routes;
 mod setup;

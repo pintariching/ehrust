@@ -22,7 +22,7 @@ pub struct PartyIdentified {
 
 impl PartyIdentified {
     pub async fn create(pool: &PgPool, namespace: &str) -> Result<PartyIdentified, ApiError> {
-        let party_identified = PartyIdentifiedInsert::new(&namespace);
+        let party_identified = PartyIdentifiedInsert::new(namespace);
 
         sqlx::query_as!(
             PartyIdentified,
@@ -51,7 +51,7 @@ impl PartyIdentified {
         )
         .fetch_one(pool)
         .await
-        .map_err(|e| ApiError::Sqlx(e.to_string()))
+        .map_err( ApiError::sqlx)
     }
 }
 

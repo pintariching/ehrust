@@ -27,7 +27,7 @@ impl Ehr {
         )
         .fetch_one(pool)
         .await
-        .map_err(|e| ApiError::sqlx(e))
+        .map_err(ApiError::sqlx)
     }
 
     pub async fn get_by_id(pool: &PgPool, id: Uuid) -> Result<Ehr, ApiError> {
@@ -41,7 +41,7 @@ impl Ehr {
         )
         .fetch_one(pool)
         .await
-        .map_err(|e| ApiError::sqlx(e))
+        .map_err(ApiError::sqlx)
     }
 }
 
