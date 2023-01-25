@@ -16,7 +16,7 @@ pub enum ApiError {
 impl ApiError {
     pub fn sqlx(error: sqlx::Error) -> Self {
         match &error {
-            sqlx::Error::Database(dbe) => ApiError::Sqlx(error.to_string()),
+            sqlx::Error::Database(_) => ApiError::Sqlx(error.to_string()),
             sqlx::Error::RowNotFound => ApiError::NotFound,
             _ => ApiError::Sqlx(error.to_string()),
         }
